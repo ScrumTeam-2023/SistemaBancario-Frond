@@ -5,23 +5,28 @@ import App from './App';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { NotFound } from "./Pages/NotFound";
 import { LoginPage } from './Pages/LoginPage';
+import { Nav } from './Nav';
+import { UserPage } from './Pages/UserPage';
+import { DashboardPage } from './Pages/DashboardP/DashboardPage';
+import { UserUpdate } from './Pages/UserUpdate';
 
 // Aca van las Paginas
 
 export const AuthContext = createContext();
 
 export const Index = () => {
-        const [loggedIn, setloggedIn] = useState(false)
-        const [dataUser, setDataUser] = useState({
-            name: '',
-            username: '',
-            role:''
-        })
+    const [loggedIn, setLoggedIn] = useState(false)
+    const [dataUser, setDataUser] = useState({
+        name: '',
+        username: '',
+        role: ''
+    })
 
         useEffect(()=> {
             let token = localStorage.getItem('token')
-            if(token) setloggedIn(true)
-        },[])
+            if(token) setLoggedIn(true)
+
+        }, [])
 
         const routes = createBrowserRouter([
             {
@@ -33,6 +38,20 @@ export const Index = () => {
                     {
                         path:'/login',
                         element: <LoginPage></LoginPage>
+                    },
+                    {
+                        path:'/panel',
+                        element: loggedIn ? <DashboardPage/> : <LoginPage/>,
+                        children: [
+                            {
+                                path: 'user',
+                                element: <UserPage/>
+                            },
+                            {
+                                path: `user/update/:id`,
+                                element: <UserUpdate/>
+                            }
+                           ]
                     }
                 ]
 
@@ -40,7 +59,7 @@ export const Index = () => {
         }])
 
   return (
-    <AuthContext.Provider value={{loggedIn,setloggedIn,dataUser,setDataUser}}>
+    <AuthContext.Provider value={{loggedIn,setLoggedIn,dataUser,setDataUser}}>
         <RouterProvider router={routes}/>
     </AuthContext.Provider>
   )

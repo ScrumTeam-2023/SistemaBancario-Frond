@@ -1,0 +1,150 @@
+/* Estilo del body */
+body {
+	margin: 0;
+	padding: 0;
+	font-family: Arial, sans-serif;
+	background-color: #fdfdfd;
+  }
+  
+  /* Estilo del sidebar */
+  #sidebar {
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	width: 200px;
+	background-color: #848484;
+	color: #fff;
+  }
+  
+  /* Estilo del logo */
+  .brand {
+	display: block;
+	margin-top: px;
+	margin-bottom: 30px;
+	font-size: 20px;
+	font-weight: bold;
+	color: #fff;
+  }
+  
+  /* Estilo del menú superior */
+  .side-menu.top {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+  }
+  
+  /* Estilo de los botones del menú */
+  .side-menu.top button {
+	display: block;
+	width: 100%;
+	padding: 12px 20px;
+	margin: 0;
+	border: none;
+	background-color: transparent;
+	color: #fff;
+	font-size: 16px;
+	text-align: left;
+  }
+  
+  /* Estilo del botón activo */
+  .side-menu.top .active button {
+	background-color: #d14444;
+  }
+  
+  /* Estilo del menú inferior */
+  .side-menu.bottom {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+  }
+  
+  /* Estilo de los botones del menú inferior */
+  .side-menu.bottom button {
+	display: block;
+	width: 100%;
+	padding: 12px 20px;
+	margin: 0;
+	border: none;
+	background-color: transparent;
+	color: #fff;
+	font-size: 20px;
+	text-align: left;
+  }
+  
+  /* Estilo del texto del botón */
+  .side-menu.bottom .text {
+	font-size: 14px;
+  }
+  
+  /* Estilo del contenido */
+  #content {
+	margin-left: 200px;
+	padding: 20px;
+  }
+  
+  /* Estilo del encabezado de la página */
+  #content nav {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px;
+	background-color: #fff;
+	box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  }
+  
+  /* Estilo del enlace de la página */
+  #content nav a {
+	text-decoration: none;
+	font-size: 20px;
+	color: #333;
+	font-weight: bold;
+  }
+  
+  /* Estilo del outlet */
+  #content Outlet {
+	padding: 20px;
+	background-color: #fff;
+  }
+
+  button {
+	background-color: #d18e8e;
+	border: none;
+	border-radius: 50px;
+	color: #fff;
+	cursor: pointer;
+	font-size: 1rem;
+	font-weight: bold;
+	margin: 10px 0;
+	padding: 10px 20px;
+	position: relative;
+	text-align: center;
+	text-decoration: none;
+	text-transform: uppercase;
+  }
+  
+  button:hover {
+	animation: buttonHoverEffect 0.5s ease-in-out;
+	animation-fill-mode: forwards;
+	box-shadow: 0px 0px 10px 0px rgba(300, 300, 300, 0.5);
+	background-color: #f1f1f1;
+
+  }
+  
+  @keyframes buttonHoverEffect {
+	0% {
+	  transform: scale(1);
+	}
+	50% {
+	  transform: scale(1.1);
+	}
+	100% {
+	  transform: scale(1);
+	}
+  }
+  
+
+  

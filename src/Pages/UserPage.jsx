@@ -90,11 +90,14 @@ export const UserPage = () => {
                 const { data } = await axios.post(`http://localhost:3000/user/save`,user,{headers:headers})
                 console.log(data)
                 getUsers()
-                if (data.message){
+                if (data){
                     Swal.fire({
                         icon:'success',
                         title: " $$$!",
-                        text: 'User Added succesfully!',
+                        text: `User Added succesfully! \n ` +
+                        '\n Refresh to see your new client!'
+                        ,
+                        
                         timer: 4000
                         
                     })
@@ -157,8 +160,10 @@ export const UserPage = () => {
                     <Box sx={style}>
 
                     <Typography id="modal-modal-title" variant="h6" component="h2">
-                        <MDBIcon fas icon="plus fa-2x " />
-                        <span>  </span>Add One User
+                        <MDBIcon fas icon="plus fa-4x " />
+                        <span>  </span><br></br>
+                        <h1>Add One User</h1>
+
                     </Typography>
 
                     <Typography id="modal-modal-description" sx={{ mt: 2 }}>

@@ -1,9 +1,10 @@
 import React from 'react'
 import Swal from 'sweetalert2';
 import { Link, useNavigate } from 'react-router-dom'
-import { AuthContext } from '../Index'
+import { AuthContext } from '../Index';
 import axios from 'axios'
 import logo from '../Assets/LogoTemp.png'
+import { useContext , useState } from 'react';
 import {
     MDBBtn,
     MDBContainer,
@@ -21,13 +22,51 @@ import {
 
 export const LoginPage = () => {
 
-    const handleChange = (e)=>{
-        setForm({
-          ...form,
-          [e.target.name]: e.target.value
-        })
-      }
+  const {loggedIn , setLoggedIn , setDataUser} = useContext(AuthContext);
+  const navigate = useNavigate();
+  
+  const [form, setForm] = useState({
+      username: '',
+      password: ''
+    })
 
+    const handleChange = (e)=>{
+      setForm({
+        ...form,
+        [e.target.name]: e.target.value
+      })
+    }
+
+
+
+
+      const logIn = async(e)=>{
+        try {
+            e.preventDefault()
+            const { data } = await axios.post('http://localhost:3000/user/login',form)
+            console.log(data.user)
+            if(data.message){
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Logged In!',
+                    text: 'Welcome'
+                })
+                localStorage.setItem('token',data.token)
+                setDataUser(data.userLogged)
+                setLoggedIn(true)
+                navigate('/panel')
+
+            }
+        }catch (err) {
+           console.log(err)
+           Swal.fire({
+            title: 'Error',
+            text: 'There might be some Credentials that are Invalid',
+            icon: 'error',
+            timer: 3500
+           }) 
+        }
+    }
     
 
       
@@ -49,20 +88,18 @@ export const LoginPage = () => {
               <p className="mb-3 text-center">Please enter your Credentials 
               to log in</p>
               
-              <MDBInput wrapperClass='mb-4 w-100' label='Email address' id='formControlLg' type='email' size="lg"/>
-              <MDBInput wrapperClass='mb-4 w-100' label='Password' id='formControlLg' type='password' size="lg"/>
+              <MDBInput onChange={handleChange} wrapperClass='mb-4'name='username' className='form-control' label='username' type="text" size="lg" required/>
+              <MDBInput onChange={handleChange} wrapperClass='mb-4'name='password' className='form-control' label='password'  type='password' size="lg" required/>
 
               <MDBCheckbox name='flexCheck' id='flexCheckDefault' className='mb-4' label='Remember password' />
 
-              <MDBBtn size='lg' color='danger'>
-                Login
-              </MDBBtn>
+              <MDBBtn onClick={(e)=> logIn(e)}  className="mb-4 px-5" color='danger' size='lg'>Login</MDBBtn>
 
               <hr className="my-4" />
 
               Welcome to 
              <MDBContainer fluid >
-                <img src={logo} class="img-thumbnail"/>
+                <img src={logo} className="img-thumbnail"/>
              </MDBContainer>
              Powered by Bad-Request-400 staff team...
             </MDBCardBody>

@@ -72,7 +72,7 @@ export const UserTable = () => {
            try {
             let confirmDeletion = confirm('Are you sure you want to delete it??')
             if(confirmDeletion){
-                const { data } = await axios.delete(`http://localhost:3000/user/delete/${id}`)
+                const { data } = await axios.delete(`http://localhost:3000/user/delete/${id}`,{headers:headers})
                 getUsers()
             
             }
@@ -138,9 +138,10 @@ export const UserTable = () => {
                                             
                                         >
                                         </User>
-                                        <td><MDBBtn className="btn" color="danger" onClick={deleteUser}>DELETE</MDBBtn>
+                                        <td><MDBBtn className="btn" color="danger" onClick={()=>deleteUser(_id)}>DELETE</MDBBtn>
+
                                         <Link to={`update/${_id}`}>
-                                             <MDBBtn className="btn" color="warning" onClick={handleOpen}>UPDATE</MDBBtn>
+                                             <MDBBtn className="btn" color="warning">UPDATE</MDBBtn>
                                         </Link>
                                         </td>
                                         

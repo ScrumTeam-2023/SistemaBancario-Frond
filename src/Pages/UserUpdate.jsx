@@ -19,23 +19,27 @@ import {
   from 'mdb-react-ui-kit';
 
 
-export const UserUpdate = ({_id,name,surname,username,location,phone,email,jobSite,ingresos,balance,movement,role}) => {
+export const UserUpdate = () => {
     const [user, setUser] = useState([]);
     const { id } = useParams();
     const { setLoggedIn, dataUser } = useContext(AuthContext);
+    const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': localStorage.getItem('token')
+      }
 
 
-    const getSingleUser = async(id)=>{
+    const getSingleUser = async()=>{
         try {
          const { data } = await axios.get(`http://localhost:3000/user/getOne/${id}`)
-         setUser(data.getSingleUser)  
+         setUser(data.findUser)  
         } catch (err) {
          console.warn(err)
          
         }
      }
 
-     const editUser = async(id)=>{
+     const editUser = async()=>{
          try {
              let upUser = {
                 name: document.getElementById('inputName').value,
@@ -45,11 +49,11 @@ export const UserUpdate = ({_id,name,surname,username,location,phone,email,jobSi
                 phone: document.getElementById('inputPhone').value,
                 email: document.getElementById('inputEmail').value,
                 jobSite: document.getElementById('inputJS').value,
-                income: document.getElementById('inputIn').value,
+                ingresos: document.getElementById('inputIn').value,
                 balance: document.getElementById('inputBal').value
              }
 
-             const { data } = await axios.put(`http://localhost:3000/user/update/${id}`,upUser)
+             const { data } = await axios.put(`http://localhost:3000/user/editUser/${id}`,upUser,{headers:headers})
              console.log(data.message)
          } catch (err) {
              
@@ -135,11 +139,11 @@ export const UserUpdate = ({_id,name,surname,username,location,phone,email,jobSi
                                                 </form>
 
 
-                                                            <Link to= '/nav/user'>
+                                                            <Link to= '/panel/user'>
                                                             <span><button className="btn btn-success" onClick={()=> editUser()}>Save Changes</button></span>
                                                             </Link>
                                                         
-                                                            <Link to= '/nav/user'>
+                                                            <Link to= '/panel/user'>
                                                             <span><button className="btn btn-danger" >Cancel</button></span>
                                                             </Link>
                                               

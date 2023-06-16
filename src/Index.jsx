@@ -26,7 +26,11 @@ export const Index = () => {
         useEffect(()=> {
             let token = localStorage.getItem('token')
             if(token) setLoggedIn(true)
-
+            //mantener sesion
+            let user = JSON.parse(localStorage.getItem('lario'))
+                if(user){
+                    setDataUser(user)
+                }
         }, [])
 
         const routes = createBrowserRouter([

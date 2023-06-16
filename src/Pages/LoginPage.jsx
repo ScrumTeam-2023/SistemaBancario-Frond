@@ -30,6 +30,7 @@ export const LoginPage = () => {
       password: ''
     })
 
+
     const handleChange = (e)=>{
       setForm({
         ...form,
@@ -54,7 +55,9 @@ export const LoginPage = () => {
                 localStorage.setItem('token',data.token)
                 setDataUser(data.userLogged)
                 setLoggedIn(true)
+                localStorage.setItem('lario',JSON.stringify(data.userLogged))
                 navigate('/panel')
+                
 
             }
         }catch (err) {

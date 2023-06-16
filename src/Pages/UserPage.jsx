@@ -84,7 +84,7 @@ export const UserPage = () => {
                     phone: document.getElementById('inputPhone').value,
                     email: document.getElementById('inputEmail').value,
                     jobSite: document.getElementById('inputJS').value,
-                    income: document.getElementById('inputIn').value,
+                    ingresos: document.getElementById('inputIn').value,
                     balance: document.getElementById('inputBal').value
                 }
                 const { data } = await axios.post(`http://localhost:3000/user/save`,user,{headers:headers})

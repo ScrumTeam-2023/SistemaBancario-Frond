@@ -64,9 +64,11 @@ export const UserUpdate = () => {
      useEffect(() => {
         getSingleUser();
       },[]);
-  return (
-   <>
-                                                    <h4>Fill the Labels to edit</h4>
+                return (
+                <>
+                                                    <MDBIcon fas icon="cogs fa-4x " />
+                                                     <span>  </span><br></br>
+                                                     <h1>Edit {user.name + '`s'} Profile</h1>
                                                                 <br></br>
                                                                 <form>
                                                     <h5>Personal Values</h5>
@@ -127,7 +129,7 @@ export const UserUpdate = () => {
                                                             <h6>REMINDER: The income must be Above 100$</h6>
                                                             <MDBCol col='6'>
                                                             <label htmlFor="inputIn" className="form-label">Income</label> 
-                                                            <input type="text" defaultValue={user.income} className="form-control mb-4" id="inputIn" required  />
+                                                            <input type="text" defaultValue={user.ingresos} className="form-control mb-4" id="inputIn" required  />
                                                             </MDBCol>
                                                             <MDBCol col='6'>
                                                             <label htmlFor="inputBal" className="form-label">Balance</label> 

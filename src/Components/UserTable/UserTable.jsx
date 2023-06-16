@@ -60,6 +60,7 @@ export const UserTable = () => {
         const getUsers = async()=>{
             try {
                 const { data } = await axios.get('http://localhost:3000/user/getUsers',{headers: headers})
+                
                 setUser(data.getUsers)
                 console.log(data)
             } catch (err) {
@@ -139,7 +140,8 @@ export const UserTable = () => {
                                         >
                                         </User>
                                         <td><MDBBtn className="btn" color="danger" onClick={()=>deleteUser(_id)}>DELETE</MDBBtn>
-
+                                        <span>     </span>
+                                            {/* espacio entre boton */}
                                         <Link to={`update/${_id}`}>
                                              <MDBBtn className="btn" color="warning">UPDATE</MDBBtn>
                                         </Link>

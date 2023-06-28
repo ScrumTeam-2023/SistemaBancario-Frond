@@ -16,8 +16,14 @@ import {
   MDBRow,
   MDBCol,
   MDBIcon,
-  MDBInput
+  MDBInput,
+  MDBCardTitle,
+  MDBCardText,
+  MDBCardHeader,
+  MDBListGroup,
+  MDBListGroupItem
 }
+
 from 'mdb-react-ui-kit';
 
 export const DashboardPage = () =>{
@@ -139,31 +145,45 @@ export const DashboardPage = () =>{
       </li>
    
 
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     </ul>
     <ul className="side-menu bottom">
       <li>
-        <button>
-          <span className="text">Welcome: {dataUser.username}, {dataUser.role}</span>
-        </button>
+          <MDBCard>
+            <MDBCardHeader style={{color:'#000'}}>Welcome:</MDBCardHeader>
+            <MDBListGroup flush>
+              <MDBListGroupItem>Name: {dataUser.username}</MDBListGroupItem>
+              <MDBListGroupItem>Role: {dataUser.role} </MDBListGroupItem>
+              <MDBListGroupItem>No: {dataUser.AccNo}</MDBListGroupItem>
+      
+            </MDBListGroup>
+   
+        </MDBCard>
+
       </li>
-    
+        <br></br>
+      <li>
+       <Link to='profile'>
+        <button>
+      
+        <span>
+        <MDBIcon fas icon="user-alt" />
+              </span>
+              <span>  </span>
+          <span className='text'>Profile</span>
+     
+       
+        </button>
+        </Link>
+
+      </li>
       <li>
         <button onClick={logOut}>
+        <span>
+           
+           </span>
+           <MDBIcon fas icon="sign-out-alt" />
+           <span>  </span>
+  
           <span className="text">LogOut</span>
         </button>
       </li>

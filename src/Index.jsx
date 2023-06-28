@@ -9,6 +9,9 @@ import { Nav } from './Nav';
 import { UserPage } from './Pages/UserPage';
 import { DashboardPage } from './Pages/DashboardP/DashboardPage';
 import { UserUpdate } from './Pages/UserUpdate';
+import { Profile } from './Pages/Profile';
+import { ProfileUpdate } from './Pages/ProfileUpdate';
+
 
 
 // Aca van las Paginas
@@ -18,14 +21,21 @@ export const AuthContext = createContext();
 export const Index = () => {
     const [loggedIn, setLoggedIn] = useState(false)
     const [dataUser, setDataUser] = useState({
+
         name: '',
+        surname: '',
         username: '',
-        role: ''
+        phone: '',
+        email: '',
+        role:'',
+        
     })
 
         useEffect(()=> {
             let token = localStorage.getItem('token')
             if(token) setLoggedIn(true)
+
+
             //mantener sesion
             let user = JSON.parse(localStorage.getItem('lario'))
                 if(user){
@@ -55,6 +65,14 @@ export const Index = () => {
                             {
                                 path: `user/update/:id`,
                                 element: <UserUpdate/>
+                            },
+                            {
+                                path: 'profile',
+                                element: <Profile/>
+                            },
+                            {
+                                path: 'profile/update/:id',
+                                element: <ProfileUpdate/>
                             }
                            ]
                     }

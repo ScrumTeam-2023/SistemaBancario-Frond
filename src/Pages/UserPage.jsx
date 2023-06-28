@@ -130,7 +130,8 @@ export const UserPage = () => {
       },[]);
   return (
     <>
-       <div>
+       <div>    
+            <br></br>
             <div className="left binding color">
             <MDBIcon fas icon="user-tie fa-4x "/>
                   <span>  </span>USER PANEL

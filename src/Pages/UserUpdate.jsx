@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { AuthContext } from '../Index';
 import axios from 'axios';
 
+
 import {
     MDBBtn,
     MDBContainer,
@@ -55,6 +56,16 @@ export const UserUpdate = () => {
 
              const { data } = await axios.put(`http://localhost:3000/user/editUser/${id}`,upUser,{headers:headers})
              console.log(data.message)
+             if(data.message){
+                Swal.fire({
+
+                    title: 'User updated Succesfully',
+                    text: 'This user is now Updatedd',
+                    icon: 'success',
+                    timer: 5000,
+                    showCloseButton: false
+                })
+             }
          } catch (err) {
              
          }

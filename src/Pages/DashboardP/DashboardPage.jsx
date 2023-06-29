@@ -147,7 +147,7 @@ export const DashboardPage = () =>{
 
     </ul>
     <ul className="side-menu bottom">
-      <li>
+      {/* <li>
           <MDBCard>
             <MDBCardHeader style={{color:'#000'}}>Welcome:</MDBCardHeader>
             <MDBListGroup flush>
@@ -159,7 +159,7 @@ export const DashboardPage = () =>{
    
         </MDBCard>
 
-      </li>
+      </li> */}
         <br></br>
       <li>
        <Link to='profile'>

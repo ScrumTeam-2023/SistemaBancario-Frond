@@ -1,10 +1,10 @@
-import { useState, useEffect , useContext} from "react";
+import { useState, useEffect, useContext } from "react";
 import { User } from '../User/User.jsx'
 import axios from "axios";
 import { Link } from "react-router-dom";
 import React from 'react'
 import { Modal } from "@mui/base";
-import { Typography , Box } from "@mui/material";
+import { Typography, Box } from "@mui/material";
 import Swal from "sweetalert2";
 import { AuthContext } from '../../Index.jsx'
 
@@ -18,25 +18,25 @@ import {
     MDBCol,
     MDBIcon,
     MDBInput
-  }
-  from 'mdb-react-ui-kit';
+}
+    from 'mdb-react-ui-kit';
 
 
-export const UserTable = () => {
-                                        
-{/* //////////////////////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// //// */}
+export const UserTable = ({ user,getU }) => {
 
-{/* //////////////////////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// //// */}
+    {/* //////////////////////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// //// */ }
+
+    {/* //////////////////////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// //// */ }
     const headers = {
         'Content-Type': 'application/json',
         'Authorization': localStorage.getItem('token')
-      }
-      const { setLoggedIn, dataUser } = useContext(AuthContext);
-      const [user, setUser] = useState([])
-    
-    
+    }
+    const { setLoggedIn, dataUser } = useContext(AuthContext);
+    //const [user, setUser] = useState([])
 
-          //Style Modal
+
+
+    //Style Modal
     const style = {
         position: 'absolute',
         top: '50%',
@@ -47,82 +47,98 @@ export const UserTable = () => {
         border: '2px solid #000',
         boxShadow: 24,
         p: 4,
-      };
-                                        
-{/* //////////////////////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// //// */}
+    };
 
-{/* //////////////////////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// //// */}
+    {/* //////////////////////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// //// */ }
 
-      const [open, setOpen] = useState(false);
-        const handleOpen = () => setOpen(true);
-        const handleClose = () => setOpen(false);
-        
-        const getUsers = async()=>{
-            try {
-                const { data } = await axios.get('http://localhost:3000/user/getUsers',{headers: headers})
-                
-                setUser(data.getUsers)
-                console.log(data)
-            } catch (err) {
-                console.log
-                
-            }
-        }
+    {/* //////////////////////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// //// */ }
 
-        const deleteUser = async(id)=>{
-           try {
-            let confirmDeletion = confirm('Are you sure you want to delete it??')
-            if(confirmDeletion){
-                const { data } = await axios.delete(`http://localhost:3000/user/delete/${id}`,{headers:headers})
-                getUsers()
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
+
+    //NO ES NECESARIO
+    /* const getUsers = async()=>{
+        try {
+            const { data } = await axios.get('http://localhost:3000/user/getUsers',{headers: headers})
             
-            }
-           } catch (err) {
-            console.error(err)
-           }
+            setUser(data.getUsers)
+            console.log(data)
+        } catch (err) {
+            console.log
+            
+        }
+    }
+*/
+    const deleteUser = async (id) => {
+        try {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const { data } = axios.delete(`http://localhost:3000/user/delete/${id}`, { headers: headers })
+                    Swal.fire(
+                        'Deleted!',
+                        'Your User has been deleted forever!.',
+                        'success'
+                    )
+                    getU()
+                }
+            })
 
+        } catch (err) {
+            console.error(err)
         }
 
-        useEffect(()=>{getUsers();},[]);
-                                                
-{/* //////////////////////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// //// */}
+    }
 
-{/* //////////////////////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// //// */}
-  return (
-    <>
-        <table className="table table-danger table-hover table-responsive-sm">
-            <thead className="thead-dark">
-            <tr>
-                <th></th>
-                <th><h5>Name</h5></th>
-                <th>Surname</th>
-                <th>Username</th>
-                <th>DPI</th>
-                <th>AccNo</th>
-                <th>Location</th>
-                <th>Phone</th>
-                <th>Email</th>
-                <th>Job</th>
-                <th>Income</th>
-                <th>balance</th>
-                <th>Movements</th>
-                <th>Role</th>
-                <th><h2>Options</h2></th>
-            </tr>
-            </thead>
-            <tbody>
+    useEffect(() => { }, []);
+
+    {/* //////////////////////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// //// */ }
+
+    {/* //////////////////////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// //// */ }
+    return (
+        <>
+            <table className="table table-danger table-hover table-responsive-sm">
+                <thead className="thead-dark">
+                    <tr style={{ width: '100px' }}>
+                        <th></th>
+                        <th><h5>Name</h5></th>
+                        <th>Surname</th>
+                        <th>Username</th>
+                        <th>DPI</th>
+                        <th>AccNo</th>
+                        <th>Location</th>
+                        <th>Phone</th>
+                        <th>Email</th>
+                        <th>Job</th>
+                        <th>Income</th>
+                        <th>balance</th>
+                        <th>Movements</th>
+                        <th>Role</th>
+                        <th><h2>Options</h2></th>
+                    </tr>
+                </thead>
+                <tbody>
                     {
                         user.length > 0 ? (
 
-                            user.map(({_id,name,surname,username,DPI,AccNo,location,phone,email,jobSite,ingresos,balance,movement,role},index)=>{
+                            user.map(({ _id, name, surname, username, DPI, AccNo, location, phone, email, jobSite, ingresos, balance, movement, role }, index) => {
 
-                                return(
-                                    
+                                return (
+
                                     <tr item key={index}>
                                         <td>
                                             <h1><MDBIcon fas icon="user-circle fa-1x" /></h1>
-                                        </td>   
-                                        <User 
+                                        </td>
+                                        <User
                                             name={name}
                                             surname={surname}
                                             username={username}
@@ -132,42 +148,42 @@ export const UserTable = () => {
                                             phone={phone}
                                             email={email}
                                             jobSite={jobSite}
-                                            ingresos={ingresos + ' $USD'} 
+                                            ingresos={ingresos + ' $USD'}
                                             balance={balance + ' $USD'}
                                             movement={movement}
                                             role={role}
-                                            
+
                                         >
                                         </User>
-                                        <td><MDBBtn className="btn" color="danger" onClick={()=>deleteUser(_id)}>DELETE</MDBBtn>
-                                        <span>     </span>
+                                        <td><MDBBtn className="btn" color="danger" onClick={() => deleteUser(_id)}>DELETE</MDBBtn>
+                                            <span>     </span>
                                             {/* espacio entre boton */}
-                                        <Link to={`update/${_id}`}>
-                                             <MDBBtn className="btn" color="warning">UPDATE</MDBBtn>
-                                        </Link>
+                                            <Link to={`update/${_id}`}>
+                                                <MDBBtn className="btn" color="warning">UPDATE</MDBBtn>
+                                            </Link>
                                         </td>
-                                        
-{/* //////////////////////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// //// */}
 
-{/* //////////////////////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// //// */}
-                                                    
+                                        {/* //////////////////////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// //// */}
 
-{/* //////////////////////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// //// */}
+                                        {/* //////////////////////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// //// */}
 
-                                        
-                                       
-                                        
+
+                                        {/* //////////////////////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// //// */}
+
+
+
+
                                     </tr>
                                 )
                             })
 
-                        ):(<h1></h1>)
+                        ) : (<h1></h1>)
 
                     }
 
-                
-            </tbody>
-        </table>
-    </>
-  )
+
+                </tbody>
+            </table>
+        </>
+    )
 }

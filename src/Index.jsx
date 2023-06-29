@@ -11,6 +11,9 @@ import { DashboardPage } from './Pages/DashboardP/DashboardPage';
 import { UserUpdate } from './Pages/UserUpdate';
 import { Profile } from './Pages/Profile';
 import { ProfileUpdate } from './Pages/ProfileUpdate';
+import { TransferPage } from './Pages/Transfer/TransferPage';
+import { DepositPage} from './Pages/Deposit/DepositPage'
+
 
 
 
@@ -73,6 +76,14 @@ export const Index = () => {
                             {
                                 path: 'profile/update/:id',
                                 element: <ProfileUpdate/>
+                            },
+                            {
+                                path: 'deposit',
+                                element: <DepositPage/>
+                            },
+                            {
+                                path: 'transfer',
+                                element: <TransferPage/>
                             }
                            ]
                     }

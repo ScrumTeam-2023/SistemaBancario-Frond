@@ -33,7 +33,9 @@ export const Profile = () => {
     const [profile, setProfile] = useState({})
     const { setLoggedIn, dataUser } = useContext(AuthContext);
     const navigate = useNavigate();
-
+    
+    
+    
       const headers = {
         'Content-Type': 'application/json',
         'Authorization': localStorage.getItem('token')
@@ -54,6 +56,11 @@ export const Profile = () => {
     }
 
     
+    
+    
+    
+
+    
       useEffect(()=>{getProfile();},[])
 
   return (
@@ -71,6 +78,9 @@ export const Profile = () => {
             </MDBBreadcrumb>
           </MDBCol>
         </MDBRow>
+        <br>
+        
+        </br>
                 <br></br>
         <MDBRow>
           <MDBCol lg="4">
@@ -189,6 +199,8 @@ export const Profile = () => {
     
     {/*  boton */}
     
+    
+
    </>
   )
 }

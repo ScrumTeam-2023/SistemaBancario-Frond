@@ -37,7 +37,7 @@ export const ProductPage = () =>{
 
     const [product,setProduct] = useState([{}])
     const [user, setUser] = useState([])
-    const {id} = useParams()
+    //const {id} = useParams()
 
     const getProduct = async () => {
         try {

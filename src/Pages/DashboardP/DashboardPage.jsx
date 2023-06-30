@@ -133,12 +133,12 @@ export const DashboardPage = () =>{
 
 
       <li>
-        <Link to="LoreIpsum">
+        <Link to="product">
           <button>
 
           <i class="fas fa-bed"></i>
           <span>  </span>
-            <span className="text">LoreIpsum</span>
+            <span className="text">Product</span>
             
           </button>
         </Link>

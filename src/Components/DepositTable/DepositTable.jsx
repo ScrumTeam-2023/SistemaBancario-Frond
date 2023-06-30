@@ -9,6 +9,7 @@ import {
   MDBModalHeader,
   MDBModalBody,
   MDBModalFooter,
+  MDBIcon
 } from 'mdb-react-ui-kit';
 
 export const DepositTable = ({ getAllDeposits }) => {
@@ -133,7 +134,7 @@ export const DepositTable = ({ getAllDeposits }) => {
           {deposit.map(({ _id, noCuenta, amount, date }, index) => (
             <tr key={index}>
               <td>
-                <h1></h1>
+                <h1><MDBIcon fas icon="piggy-bank" /></h1>
               </td>
               <td>{_id}</td>
               <td>{noCuenta}</td>

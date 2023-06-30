@@ -13,7 +13,7 @@ import { Profile } from './Pages/Profile';
 import { ProfileUpdate } from './Pages/ProfileUpdate';
 import { TransferPage } from './Pages/Transfer/TransferPage';
 import { DepositPage} from './Pages/Deposit/DepositPage'
-
+import {AddServicesPage} from './Pages/AddServices/AddServicesPage'
 
 
 
@@ -84,6 +84,10 @@ export const Index = () => {
                             {
                                 path: 'transfer',
                                 element: <TransferPage/>
+                            },
+                            {
+                                path:'services',
+                                element: <AddServicesPage/>
                             }
                            ]
                     }

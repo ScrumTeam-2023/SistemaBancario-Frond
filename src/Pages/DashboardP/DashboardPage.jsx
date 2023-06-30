@@ -90,7 +90,7 @@ export const DashboardPage = () =>{
       )}
 
       <li>
-        <Link to="temp">
+        <Link to="services">
           <button>
           <span>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-person-fill" viewBox="0 0 16 16">
@@ -98,7 +98,7 @@ export const DashboardPage = () =>{
           </svg>
               </span>
               <span>  </span>
-            <span className="text">Temp</span>
+            <span className="text">Services</span>
           </button>
         </Link>
       </li>

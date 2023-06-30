@@ -1,23 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Deposit } from '../Deposit/Deposit';
 import Swal from 'sweetalert2';
-
 import {
   MDBBtn,
-  MDBContainer,
-  MDBCard,
-  MDBCardBody,
-  MDBCardImage,
-  MDBRow,
-  MDBCol,
-  MDBIcon,
-  MDBInput
+  MDBModal,
+  MDBModalDialog,
+  MDBModalContent,
+  MDBModalHeader,
+  MDBModalBody,
+  MDBModalFooter,
 } from 'mdb-react-ui-kit';
 
 export const DepositTable = ({ getAllDeposits }) => {
   const [deposit, setDeposit] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [depositId, setDepositId] = useState('');
+  const [newAmount, setNewAmount] = useState('');
 
+  const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': localStorage.getItem('token')
+  }
+  
   useEffect(() => {
     const fetchDeposits = async () => {
       try {
@@ -31,6 +35,7 @@ export const DepositTable = ({ getAllDeposits }) => {
     fetchDeposits();
   }, [getAllDeposits]);
 
+    //CANCEL
   const cancelDeposit = async (depositId) => {
     try {
       const response = await axios.delete(`http://localhost:3000/deposit/cancel/${depositId}`);
@@ -77,6 +82,36 @@ export const DepositTable = ({ getAllDeposits }) => {
     }
   };
 
+
+  const updateDeposit = (depositId, newAmount) => {
+    setDepositId(depositId);
+    setNewAmount(newAmount);
+    setIsModalOpen(true);
+  };
+
+  const handleUpdate = async () => {
+    try {
+      const response = await axios.put(`http://localhost:3000/deposit/update/${depositId}`, { amount: newAmount });
+      const data = response.data;
+  
+      if (data.message === 'El depósito se ha actualizado y el saldo de la cuenta beneficiaria se ha actualizado') {
+        Swal.fire('Éxito', data.message, 'success');
+      } else if (data.message === 'El tiempo de actualización ha expirado') {
+        Swal.fire('Error', data.message, 'error');
+      } else {
+        Swal.fire('Error', 'Ocurrió un error al actualizar el depósito', 'error');
+      }
+  
+      console.log(data.deposit);
+      console.log(data.user);
+  
+      setIsModalOpen(false);
+    } catch (error) {
+      console.error(error);
+      Swal.fire('Error', 'Ocurrió un error al actualizar el depósito', 'error');
+    }
+  };
+
   return (
     <>
       <table className="table table-danger table-hover table-responsive-sm">
@@ -110,8 +145,8 @@ export const DepositTable = ({ getAllDeposits }) => {
                   <MDBBtn className="btn" color="danger" onClick={() => cancelDeposit(_id)}>
                     Cancel
                   </MDBBtn>
-                  <MDBBtn className="btn" color="warning">
-                    UPDATE
+                  <MDBBtn className="btn" color="warning" onClick={() => updateDeposit(_id, amount,newAmount )}>
+                    Update
                   </MDBBtn>
                 </td>
               </td>
@@ -119,6 +154,30 @@ export const DepositTable = ({ getAllDeposits }) => {
           ))}
         </tbody>
       </table>
+
+      {/* MODAL UPDATE */}
+      <MDBModal show={isModalOpen} tabIndex="-1" fullHeight position="right" centered>
+        <MDBModalDialog>
+          <MDBModalContent>
+            <MDBModalHeader>
+              <h5 className="modal-title">Update Deposit</h5>
+              <MDBBtn className="btn-close" color="none" onClick={() => setIsModalOpen(false)} />
+            </MDBModalHeader>
+            <MDBModalBody>
+              <div className="mb-3">
+                <label htmlFor="newAmount" className="form-label">New Amount:</label>
+                <input type="text" className="form-control" id="newAmount" value={newAmount} onChange={(e) => setNewAmount(e.target.value)} />
+              </div>
+            </MDBModalBody>
+            <MDBModalFooter>
+              <MDBBtn color="secondary" onClick={() => setIsModalOpen(false)}>Close</MDBBtn>
+              <MDBBtn color="primary" onClick={handleUpdate}>Save changes</MDBBtn>
+            </MDBModalFooter>
+          </MDBModalContent>
+        </MDBModalDialog>
+      </MDBModal>
     </>
   );
 };
+
+

@@ -78,7 +78,7 @@ const getAllDeposits = async()=>{
                     noCuenta: document.getElementById('inputnoCuenta').value,
                     amount: document.getElementById('inputAmount').value,
                 }
-                const { data } = await axios.post(`http://localhost:3000/deposit/add`,deposit,/*{headers:headers}*/)
+                const { data } = await axios.post(`http://localhost:3000/deposit/add`,deposit,{headers:headers})
                 console.log(data)
                 getAllDeposits();   
                 if (data.message){
@@ -109,6 +109,8 @@ const getAllDeposits = async()=>{
             makeDeposit()
             getAllDeposits()
        }
+
+       
 
     
     useEffect(() => {

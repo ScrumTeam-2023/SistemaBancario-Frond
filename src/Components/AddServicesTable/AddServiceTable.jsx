@@ -19,7 +19,7 @@ import {
   }
   from 'mdb-react-ui-kit';
 
-  export const AddServicesTable =()=>{
+  export const AddServicesTable =({service,getService})=>{
     const style = {
         position: 'absolute',
         top: '50%',
@@ -38,9 +38,9 @@ import {
       }
 
 //------------------------------------------------------------
-const [service, setService] = useState([{}])
+/* const [service, setService] = useState([{}]) */
 
-const getService = async()=>{
+/* const getService = async()=>{
     try{
         const { data } = await axios.get('http://localhost:3000/addServices/get',{headers: headers})
         setService(data.service)
@@ -49,7 +49,7 @@ const getService = async()=>{
         console.log
     }
 }
-useEffect(()=>{getService()},[])
+useEffect(()=>{getService()},[]) */
 
 const deleteService = async(id)=>{
     try{
@@ -71,8 +71,8 @@ const deleteService = async(id)=>{
 
 return(
     <>
-        <table className="table">
-            <thead>
+        <table className="table table-danger table-hover table-responsive-sm">
+            <thead className="thead-dark">
                 <tr>
                     <th>Name</th>
                     <th>Description</th>
@@ -84,7 +84,7 @@ return(
             </thead>
             <tbody>
                 {
-                    service.map(({_id,name,description,price,historial,DPI},index)=>{
+                    service?.map(({_id,name,description,price,historial,DPI},index)=>{
                      return(
                         <tr key={index}>
                             <AddServices 
@@ -101,7 +101,7 @@ return(
                                 {/* */}
                                     {/* Actualizar /${_id} */}
                                     <Link to={`update/${_id}`}>
-                                        <td><button className="btn btn-light" onClick={()=> handleUpdate(_id)}>Editar</button></td>
+                                        <td><button className="btn btn-warning" onClick={()=> handleUpdate(_id)}>AddService</button></td>
                                     </Link>
 
                                     {/* */}

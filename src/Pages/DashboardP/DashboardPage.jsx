@@ -147,19 +147,7 @@ export const DashboardPage = () =>{
 
     </ul>
     <ul className="side-menu bottom">
-      <li>
-          <MDBCard>
-            <MDBCardHeader style={{color:'#000'}}>Welcome:</MDBCardHeader>
-            <MDBListGroup flush>
-              <MDBListGroupItem>Name: {dataUser.username}</MDBListGroupItem>
-              <MDBListGroupItem>Role: {dataUser.role} </MDBListGroupItem>
-              <MDBListGroupItem>No: {dataUser.AccNo}</MDBListGroupItem>
       
-            </MDBListGroup>
-   
-        </MDBCard>
-
-      </li>
         <br></br>
       <li>
        <Link to='profile'>

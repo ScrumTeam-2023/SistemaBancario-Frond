@@ -5,6 +5,9 @@ import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../Index'
 import { useState, useContext , useEffect } from 'react'
 import axios from 'axios'
+import HistoryModal from '../Components/HistoryModal/HistoryModal';
+
+
 
 
 import {
@@ -33,7 +36,9 @@ export const Profile = () => {
     const [profile, setProfile] = useState({})
     const { setLoggedIn, dataUser } = useContext(AuthContext);
     const navigate = useNavigate();
-
+    
+    
+    
       const headers = {
         'Content-Type': 'application/json',
         'Authorization': localStorage.getItem('token')
@@ -54,7 +59,45 @@ export const Profile = () => {
     }
 
     
+    
+    
+    
+
+    
       useEffect(()=>{getProfile();},[])
+
+    //HISTORIAL
+      // Obtener el token de autenticación del usuario (ejemplo)
+  const token = localStorage.getItem('token'); // Reemplaza con el método adecuado para obtener el token
+
+  // Realizar una solicitud al servidor para obtener el número de cuenta asociado al token
+  axios.get('/accountNumber', {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  })
+    .then(response => {
+      const accountNumber = response.data.accountNumber;
+      // Haz algo con el número de cuenta, como mostrarlo en un modal
+
+      // Obtener el historial utilizando el número de cuenta
+      axios.get(`http://localhost:3000/history/${accountNumber}`)
+        .then(response => {
+          const { deposits, transfers } = response.data;
+          // Haz algo con los depósitos y las transferencias recibidas
+          console.log(deposits);
+          console.log(transfers);
+        })
+        .catch(error => {
+          console.error(error);
+          // Maneja el error de alguna manera apropiada
+        });
+    })
+    .catch(error => {
+      console.error(error);
+      // Maneja el error de alguna manera apropiada
+    });
+
 
   return (
    <>   
@@ -72,6 +115,9 @@ export const Profile = () => {
             </MDBBreadcrumb>
           </MDBCol>
         </MDBRow>
+        <br>
+        
+        </br>
                 <br></br>
         <MDBRow>
           <MDBCol lg="4">
@@ -170,14 +216,6 @@ export const Profile = () => {
                     <MDBCardText className="text-muted">{profile.email}</MDBCardText>
                   </MDBCol>
                 </MDBRow>
-
-
-
-
-
-
-
-
               </MDBCardBody>
             </MDBCard>
             <br></br>
@@ -211,6 +249,9 @@ export const Profile = () => {
     
     {/*  boton */}
     
+    <HistoryModal />
+
+
    </>
   )
 }

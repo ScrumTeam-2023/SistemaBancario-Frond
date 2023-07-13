@@ -65,7 +65,19 @@ const deleteService = async(id)=>{
     }
 }
 
-//Update
+//Comprar
+
+const buyService = async(id)=>{
+    try{
+        console.log(headers)
+        const {data} = await axios.post(`http://localhost:3000/addServices/acquire/${id}`,{},{headers: headers})
+        if(data.message){ alert(data.message)}
+        
+
+    }catch(err){
+        console.error(err)
+    }
+}
 
 //-------------------------------------------------------------------
 
@@ -99,10 +111,10 @@ return(
 
                             <div>
                                 {/* */}
-                                    {/* Actualizar /${_id} */}
-                                    <Link to={`update/${_id}`}>
-                                        <td><button className="btn btn-warning" onClick={()=> handleUpdate(_id)}>AddService</button></td>
-                                    </Link>
+                                    {/* ComprarServicio /${_id} */}
+                                    
+                                    <td><button className="btn btn-warning" onClick={()=> buyService(_id)}>Comprar</button></td>
+                                    
 
                                     {/* */}
                                     {/* Eliminar */}

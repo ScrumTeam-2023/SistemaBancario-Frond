@@ -57,6 +57,9 @@ export const UserPage = () => {
 
     {/* //////////////////////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// //// */ }
 
+ 
+
+
     const getUsers = async () => {
         try {
             const { data } = await axios.get('http://localhost:3000/user/getUsers', { headers: headers })
@@ -143,6 +146,9 @@ export const UserPage = () => {
                     </div>
                 </div>
                 <div></div>
+                <MDBBtn onClick={handleMultiply}>XDDD</MDBBtn>
+                <span></span>
+                <MDBBtn onClick={handleReset}>Ops</MDBBtn>
 
                 <MDBBtn className="mb-4 px-6 btn-rounded d-grid" style={{ float: 'right', margin: 'auto', justifyContent: "flex-end" }} color='success' size='lg' onClick={handleOpen}> Add User</MDBBtn>
                 <br></br>

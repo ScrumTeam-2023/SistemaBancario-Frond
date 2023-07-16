@@ -143,8 +143,19 @@ export const DashboardPage = () =>{
           </button>
         </Link>
       </li>
-   
+      {dataUser.role === "ADMIN" && (
+      <li>
+        <Link to="compra">
+          <button>
 
+          <i class="fas fa-bed"></i>
+          <span>  </span>
+            <span className="text">Compras</span>
+            
+          </button>
+        </Link>
+      </li>
+    )}
     </ul>
     <ul className="side-menu bottom">
       

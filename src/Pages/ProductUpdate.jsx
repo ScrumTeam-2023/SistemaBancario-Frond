@@ -17,7 +17,7 @@ import {
   }from 'mdb-react-ui-kit';
 
 export const ProductUpdate = () => {
-    const [product, setProduct] = useState([])
+    const [product, setProduct] = useState([{}])
     const { setLoggedIn, dataUser } = useContext(AuthContext);
     const {id} = useParams()
     

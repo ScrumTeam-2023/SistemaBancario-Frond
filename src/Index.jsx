@@ -13,8 +13,11 @@ import { Profile } from './Pages/Profile';
 import { ProfileUpdate } from './Pages/ProfileUpdate';
 import { TransferPage } from './Pages/Transfer/TransferPage';
 import { DepositPage} from './Pages/Deposit/DepositPage'
-
-
+import {AddServicesPage} from './Pages/AddServices/AddServicesPage'
+import { ProductPage } from './Pages/ProductPage';
+import { ProductUpdate } from './Pages/ProductUpdate';
+import { CompraPage } from './Pages/CompraPage';
+import { CompraTable } from './Components/CompraTable/CompraTAble';
 
 
 // Aca van las Paginas
@@ -84,6 +87,26 @@ export const Index = () => {
                             {
                                 path: 'transfer',
                                 element: <TransferPage/>
+                            },
+                            {
+                                path:'services',
+                                element: <AddServicesPage/>
+                            },
+                            {
+                                path: 'product',
+                                element: <ProductPage/>
+                            },
+                            {
+                                path: 'product/update/:id',
+                                element: <ProductUpdate/>
+                            },
+                            {
+                                path: 'product/addComp/:id',
+                                element: <CompraPage/>
+                            },
+                            {
+                                path: 'compra',
+                                element: <CompraTable/>
                             }
                            ]
                     }

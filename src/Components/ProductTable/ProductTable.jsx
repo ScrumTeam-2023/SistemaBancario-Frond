@@ -39,6 +39,8 @@ export const ProductTable = () => {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const { setLoggedIn, dataUser } = useContext(AuthContext);
+
 
     const getProduct = async () => {
         try {
@@ -96,11 +98,19 @@ export const ProductTable = () => {
 
                                     >
                                     </Product>
+                                    
+                                    {dataUser.role === "ADMIN" && (
                                     <td><MDBBtn className="btn" color="danger" onClick={() =>deleteProduct(_id)}>DELETE</MDBBtn>
                                         <span>     </span>
-                                        {/* espacio entre boton */}
-                                        <Link to={`updateProduct/${_id}`}>
+
+                                        <Link to={`update/${_id}`}>
                                             <MDBBtn className="btn" color="warning">UPDATE</MDBBtn>
+                                        </Link>
+                                    </td>
+                                    )}
+                                    <td>    
+                                        <Link to={`addComp/${_id}`}>
+                                            <MDBBtn className="btn" color="primary">COMPRAR</MDBBtn>
                                         </Link>
                                     </td>
                                 </tr>

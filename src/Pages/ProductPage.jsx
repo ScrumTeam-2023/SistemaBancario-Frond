@@ -1,7 +1,8 @@
-import React, { useState , useEffect }  from 'react'
+import React, { useState , useEffect, useContext }  from 'react'
 import Swal from 'sweetalert2'
 import { ProductTable } from '../Components/ProductTable/ProductTable';
 import axios from "axios";
+import { AuthContext } from '../Index';
 import { Modal } from "@mui/base";
 import { Typography , Box } from "@mui/material";
 
@@ -34,10 +35,10 @@ export const ProductPage = () =>{
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-
+    const { setLoggedIn, dataUser } = useContext(AuthContext);
     const [product,setProduct] = useState([{}])
     const [user, setUser] = useState([])
-    const {id} = useParams()
+    //const {id} = useParams()
 
     const getProduct = async () => {
         try {
@@ -101,8 +102,11 @@ export const ProductPage = () =>{
                 <h3>algo sobre productos xd</h3>
                 </div>
             </div>
+            {dataUser.role === "ADMIN" && (
             <MDBBtn className="mb-4 px-5" color='danger' size='lg' onClick={handleOpen}> Add Product</MDBBtn>
+            )}
             <br></br>
+            
             <ProductTable/>
 
             <Modal id="Add"

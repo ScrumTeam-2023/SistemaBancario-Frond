@@ -90,7 +90,7 @@ export const DashboardPage = () =>{
       )}
 
       <li>
-        <Link to="temp">
+        <Link to="services">
           <button>
           <span>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-person-fill" viewBox="0 0 16 16">
@@ -98,7 +98,7 @@ export const DashboardPage = () =>{
           </svg>
               </span>
               <span>  </span>
-            <span className="text">Temp</span>
+            <span className="text">Services</span>
           </button>
         </Link>
       </li>
@@ -133,33 +133,32 @@ export const DashboardPage = () =>{
 
 
       <li>
-        <Link to="LoreIpsum">
+        <Link to="product">
           <button>
 
           <i class="fas fa-bed"></i>
           <span>  </span>
-            <span className="text">LoreIpsum</span>
+            <span className="text">Product</span>
             
           </button>
         </Link>
       </li>
-   
+      {dataUser.role === "ADMIN" && (
+      <li>
+        <Link to="compra">
+          <button>
 
+          <i class="fas fa-bed"></i>
+          <span>  </span>
+            <span className="text">Compras</span>
+            
+          </button>
+        </Link>
+      </li>
+    )}
     </ul>
     <ul className="side-menu bottom">
-      <li>
-          <MDBCard>
-            <MDBCardHeader style={{color:'#000'}}>Welcome:</MDBCardHeader>
-            <MDBListGroup flush>
-              <MDBListGroupItem>Name: {dataUser.username}</MDBListGroupItem>
-              <MDBListGroupItem>Role: {dataUser.role} </MDBListGroupItem>
-              <MDBListGroupItem>No: {dataUser.AccNo}</MDBListGroupItem>
       
-            </MDBListGroup>
-   
-        </MDBCard>
-
-      </li>
         <br></br>
       <li>
        <Link to='profile'>

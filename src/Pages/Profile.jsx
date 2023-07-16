@@ -32,7 +32,7 @@ import {
 
 
 export const Profile = () => {
-
+        //aca Agarrara los datos para mostrar
     const [profile, setProfile] = useState({})
     const { setLoggedIn, dataUser } = useContext(AuthContext);
     const navigate = useNavigate();
@@ -109,8 +109,9 @@ export const Profile = () => {
         <MDBRow>
           <MDBCol>
             <MDBBreadcrumb className="bg-light rounded-3 p-3 mb-4">
-             
-              <MDBBreadcrumbItem active className='text'>Profile</MDBBreadcrumbItem>
+          
+              <MDBBreadcrumbItem active className='text-muted mb-1'>  <h6>panel  /  {profile.username + '`s   ' }Profile</h6> </MDBBreadcrumbItem>
+              
             </MDBBreadcrumb>
           </MDBCol>
         </MDBRow>
@@ -127,7 +128,8 @@ export const Profile = () => {
                 <br></br>
                 <br></br>
 
-                <p className="text-muted mb-1">I Am the user</p>
+                <p className="text-muted mb-1">All your Information is  Shown here...</p>
+                <p> </p>
                 <p className="text-muted mb-1"> Role: <h3> {profile.role} </h3> </p>
 
                 <p className="text-muted mb-1"> Account: <h4>{profile.AccNo}</h4> </p>
@@ -216,6 +218,26 @@ export const Profile = () => {
                 </MDBRow>
               </MDBCardBody>
             </MDBCard>
+            <br></br>
+            
+          
+
+            <MDBCol sm="8">
+            <p className="text-muted mb-1">Your Current Balance is Shown Here</p>
+            <MDBCardText className="text-muted">Current Balance:</MDBCardText>
+            <MDBBreadcrumb className="bg-light rounded-3 p-3 mb-2">
+              <MDBBreadcrumbItem active className='text'><h3>{profile.balance + ' USD$'}</h3></MDBBreadcrumbItem>
+        
+            </MDBBreadcrumb>
+    
+
+            <MDBBreadcrumb className="bg-light rounded-3 p-3 mb-2">
+            <MDBCardText className="text-muted">Movements:  </MDBCardText>
+            <br></br><span></span>
+            <MDBBreadcrumbItem active className='text'><h3>{'   ' + profile.movement}</h3></MDBBreadcrumbItem>
+            <p className="text-muted mb-1">Movements Grow up Everytime you Interact with Bank Transactions</p>
+            </MDBBreadcrumb>
+            </MDBCol>
 
     
           </MDBCol>

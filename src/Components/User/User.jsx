@@ -1,6 +1,6 @@
 
 
-export const User = ({name,surname,username,DPI,AccNo,location,phone,email,jobSite,ingresos,balance,movement,role}) => {
+export const User = ({name,surname,username,DPI,AccNo,location,phone,email,jobSite,ingresos,balance,movements,role}) => {
   return (
    <>
    <td>{name}</td>
@@ -14,7 +14,7 @@ export const User = ({name,surname,username,DPI,AccNo,location,phone,email,jobSi
    <td>{jobSite}</td>
    <td>{ingresos}</td>
    <td>{balance}</td>
-   <td>{movement}</td>
+   <td>{movements}</td>
    <td>{role}</td>
 
    </>

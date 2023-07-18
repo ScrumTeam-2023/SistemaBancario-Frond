@@ -21,7 +21,7 @@ const TransactionTable = () => {
       <div>
         <button onClick={handleSearch}>Buscar Transferencias</button>
       </div>
-      <table>
+      <table> 
         <thead>
           <tr>
             <th>ID</th>

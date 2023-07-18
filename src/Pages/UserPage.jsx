@@ -57,19 +57,22 @@ export const UserPage = () => {
 
     {/* //////////////////////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// /////////// //// */ }
 
-    const getUsers = async () => {
+    const getUsers = async (sortOption) => {
         try {
-            const { data } = await axios.get('http://localhost:3000/user/getUsers', { headers: headers })
-            if (data.getUsers) {
-                setUsers(data.getUsers)
-            }
+          const response = await axios.get('http://localhost:3000/user/getUsers', { headers: headers });
+          let sortedUsers = response.data.getUsers;
+      
+          if (sortOption === 'asc') {
+            sortedUsers.sort((a, b) => a.movements - b.movements);
+          } else if (sortOption === 'desc') {
+            sortedUsers.sort((a, b) => b.movements - a.movements);
+          }
+      
+          setUsers(sortedUsers);
         } catch (err) {
-            console.log(err)
-
+          console.error(err);
         }
-    }
-
-
+      };
 
 
     const addUser = async () => {
@@ -85,7 +88,8 @@ export const UserPage = () => {
                 email: document.getElementById('inputEmail').value,
                 jobSite: document.getElementById('inputJS').value,
                 ingresos: document.getElementById('inputIn').value,
-                balance: document.getElementById('inputBal').value
+                balance: document.getElementById('inputBal').value,
+                role: document.getElementById('inputRole').value
             }
             const { data } = await axios.post(`http://localhost:3000/user/save`, user, { headers: headers })
             console.log(data)
@@ -139,16 +143,18 @@ export const UserPage = () => {
                     <div className="left binding color">
 
                         <br></br>
-                        <h3>You can see here all the users stored in our not fictional DB</h3>
                     </div>
                 </div>
                 <div></div>
 
+
+                <br></br>
+                <br></br>
+                
+                <br></br>
                 <MDBBtn className="mb-4 px-6 btn-rounded d-grid" style={{ float: 'right', margin: 'auto', justifyContent: "flex-end" }} color='success' size='lg' onClick={handleOpen}> Add User</MDBBtn>
-                <br></br>
-                <br></br>
-                <br></br>
                 <UserTable user={users} getU={getUsers} />
+                
 
 
 
@@ -193,6 +199,10 @@ export const UserPage = () => {
                                     <MDBCol col='6'>
                                         <label htmlFor="inputUser" className="form-label">User </label>
                                         <input type="text" className="form-control mb-4" id="inputUser" label='User' required />
+                                    </MDBCol>
+                                    <MDBCol col='6'>
+                                        <label htmlFor="inputRole" className="form-label">Role </label>
+                                        <input type="text" className="form-control mb-4" id="inputRole" label='User' required />
                                     </MDBCol>
 
 

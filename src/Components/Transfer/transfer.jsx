@@ -1,4 +1,4 @@
-export const Transfer = ({sourceAccount,destinationAccount,amount,date}) =>{
+export const Transfer = ({sourceAccount,destinationAccount,amount,date,DPI}) =>{
     
     return(
     <>
@@ -6,6 +6,7 @@ export const Transfer = ({sourceAccount,destinationAccount,amount,date}) =>{
     <td>{destinationAccount}</td>
     <td>{amount}</td> 
     <td>{date}</td>
+    <td>{DPI}</td>
     </>
     )
     

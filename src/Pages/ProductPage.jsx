@@ -38,18 +38,19 @@ export const ProductPage = () =>{
     const { setLoggedIn, dataUser } = useContext(AuthContext);
     const [product,setProduct] = useState([{}])
     const [user, setUser] = useState([])
+    
     //const {id} = useParams()
 
     const getProduct = async () => {
         try {
             const {data} = await axios.get('http://localhost:3000/product/getProducts')
-            setProduct(data)
+            setProduct(data.pro)
         } catch (err) {
             console.log
         }
     }
 
-    const addProduct = async()=>{
+    const addProduct = async()=>{   
         try {
             let product = {
                 name: document.getElementById('inputName').value,
@@ -59,7 +60,6 @@ export const ProductPage = () =>{
             }
             const {data} = await axios.post(`http://localhost:3000/product/createProduct`,product)
             console.log(data)
-            getProduct()
             if(data){
                 Swal.fire({
                     icon:'success',
@@ -70,7 +70,6 @@ export const ProductPage = () =>{
                     
                 })
             }
-            getProduct()
         } catch (err) {
             console.log(err)
             Swal.fire({
@@ -88,18 +87,16 @@ export const ProductPage = () =>{
     }
 
     useEffect(() => {
-        getProduct()
-    }, [])
-
+        getProduct();
+      }, []);
     return(
         <>
        <div>
             <div className="left binding color">
-            <MDBIcon fas icon="user-tie fa-4x "/>
+            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 640 512"><path d="M36.8 192H603.2c20.3 0 36.8-16.5 36.8-36.8c0-7.3-2.2-14.4-6.2-20.4L558.2 21.4C549.3 8 534.4 0 518.3 0H121.7c-16 0-31 8-39.9 21.4L6.2 134.7c-4 6.1-6.2 13.2-6.2 20.4C0 175.5 16.5 192 36.8 192zM64 224V384v80c0 26.5 21.5 48 48 48H336c26.5 0 48-21.5 48-48V384 224H320V384H128V224H64zm448 0V480c0 17.7 14.3 32 32 32s32-14.3 32-32V224H512z"/></svg>
                   <span>  </span>PRODUCTS PANEL
                 <div className="left binding color">
                     <br></br>
-                <h3>algo sobre productos xd</h3>
                 </div>
             </div>
             {dataUser.role === "ADMIN" && (
@@ -118,7 +115,7 @@ export const ProductPage = () =>{
                     <Box sx={style}>
 
                     <Typography id="modal-modal-title" variant="h6" component="h2">
-                        <MDBIcon fas icon="plus fa-4x " />
+                    <i class="fab fa-shopify"></i>
                         <span>  </span><br></br>
                         <h1>Add One Product</h1>
 
@@ -160,5 +157,3 @@ export const ProductPage = () =>{
 
     )
 }
-
-

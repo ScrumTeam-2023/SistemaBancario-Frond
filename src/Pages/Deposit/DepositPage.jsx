@@ -47,6 +47,7 @@ export const DepositPage = () => {
       
     const [deposit,setDeposit] = useState([])
     const [user, setUser] = useState([])
+    const [refreshTable, setRefreshTable] = useState(false);
 
 
     const headers = {
@@ -67,55 +68,45 @@ const getAllDeposits = async()=>{
     }
 }
 
+const makeDeposit = async () => {
+    try {
+      let deposit = {
+        noCuenta: document.getElementById('inputnoCuenta').value,
+        amount: document.getElementById('inputAmount').value,
+      }
+      const { data } = await axios.post(`http://localhost:3000/deposit/add`, deposit, { headers: headers })
+      console.log(data)
+      if (data.message) {
+        Swal.fire({
+          icon: 'success',
+          title: " $$$!",
+          text: 'Deposit Added successfully!',
+          timer: 4000
+        })
 
-
-
-
-
-       const makeDeposit = async()=>{
-            try {
-                let deposit = {
-                    noCuenta: document.getElementById('inputnoCuenta').value,
-                    amount: document.getElementById('inputAmount').value,
-                }
-                const { data } = await axios.post(`http://localhost:3000/deposit/add`,deposit,{headers:headers})
-                console.log(data)
-                getAllDeposits();   
-                if (data.message){
-                    Swal.fire({
-                        icon:'success',
-                        title: " $$$!",
-                        text: 'Deposit Added succesfully!',
-                        timer: 4000
-                        
-                    })
-                    getAllDeposits();   
-                }
-
-            } catch (err) {
-                console.error(err);
-                Swal.fire({
-                    title: 'Error',
-                    text: err.response.data.message,
-                    icon: 'error'
-                })
-            }
-       }
-
-
-
-       const addThem = async()=>{
-            handleClose()
-            makeDeposit()
-            getAllDeposits()
-       }
-
-       
-
-    
-    useEffect(() => {
-        getAllDeposits();
-      },[]);
+      }
+    } catch (err) {
+      console.error(err);
+      Swal.fire({
+        title: 'Error',
+        text: err.response.data.message,
+        icon: 'error'
+      })
+    }
+  }
+  
+  const addThem = async () => {
+    handleClose();
+    await makeDeposit();
+    setRefreshTable(true);
+  }
+  
+  useEffect(() => {
+    if (refreshTable) {
+      getAllDeposits();
+      setRefreshTable(false);
+    }
+  }, [refreshTable]);
   return (
     <>
        <div>
@@ -168,15 +159,8 @@ const getAllDeposits = async()=>{
                                         <label htmlFor="inputAmount" className="form-label">Amount </label> 
                                         <input type="number" className="form-control mb-4" id="inputAmount" label='amount' required  />
                                         </MDBCol>
-
-
-                                </form>
-
-
-
-                            
-
-                       <span><button className="btn btn-success" onClick={()=> addThem()}>Add New User</button></span>
+                                </form>                   
+                       <span><button className="btn btn-success" onClick={()=> addThem()}>Add New Deposit</button></span>
                                     <span>      </span>
                         <span><button className="btn btn-danger" onClick={handleClose}>Cancel</button></span>
                     </Typography>

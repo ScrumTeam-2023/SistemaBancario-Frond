@@ -16,7 +16,9 @@ import {
     MDBInput
   }from 'mdb-react-ui-kit';
 
-export const ProductUpdate = () => {
+                {/*  update */}
+
+    export const ProductUpdate = () => {
     const [product, setProduct] = useState([{}])
     const { setLoggedIn, dataUser } = useContext(AuthContext);
     const {id} = useParams()
@@ -67,9 +69,9 @@ export const ProductUpdate = () => {
             <br></br>
             <form>
                 <h5>Products Values</h5>
-                {/*  */}
+                {/* form update */}
 
-                {/*dataUser.role === "ADMIN" && (*/
+               
                     <>
                         <MDBCol col='6'>
                             <label htmlFor="inputName" className="form-label">Name</label>
@@ -95,7 +97,6 @@ export const ProductUpdate = () => {
 
                         </MDBRow>
                     </>
-                /*)*/}
             </form>
 
 

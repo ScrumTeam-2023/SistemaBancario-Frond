@@ -1,9 +1,11 @@
 import axios from "axios";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { AddServicesTable } from "../../Components/AddServicesTable/AddServiceTable";
 import Swal from 'sweetalert2'
 import { Modal } from "@mui/base";
 import { Typography, Box } from "@mui/material";
+import { AuthContext } from "../../Index";
+import jsPDF from 'jspdf'; // Importar jsPDF para generar el PDF
 
 import {
     MDBBtn,
@@ -15,14 +17,11 @@ import {
     MDBCol,
     MDBIcon,
     MDBInput
-}
-    from 'mdb-react-ui-kit';
-//----------------------------
+} from 'mdb-react-ui-kit';
 
 export const AddServicesPage = () => {
-    const [service, setService] = useState([{}])
-
-    //-------------Modal------------------
+    const [service, setService] = useState([{}]);
+    const { setLoggedIn, dataUser } = useContext(AuthContext);
 
     const [open, setOpen] = useState(false);
 
@@ -32,7 +31,7 @@ export const AddServicesPage = () => {
     const headers = {
         'Content-Type': 'application/json',
         'Authorization': localStorage.getItem('token')
-    }
+    };
 
     const style = {
         position: 'absolute',
@@ -46,18 +45,16 @@ export const AddServicesPage = () => {
         p: 4,
     };
 
-    //------------------------Agregar--------------------------
-
     const getService = async () => {
         try {
-            const { data } = await axios.get('http://localhost:3000/addServices/get', { headers: headers })
+            const { data } = await axios.get('http://localhost:3000/addServices/get', { headers: headers });
             if (data.service) {
-                setService(data.service)
+                setService(data.service);
             }
         } catch (err) {
-            console.log(err)
+            console.log(err);
         }
-    }
+    };
 
     const addService = async () => {
         try {
@@ -66,45 +63,47 @@ export const AddServicesPage = () => {
                 description: document.getElementById('inputDescription').value,
                 price: document.getElementById('inputPrice').value,
                 historial: document.getElementById('inputHistorial').value,
-                DPI: document.getElementById('inputDPI').value,
-            }
+            };
 
-            const { data } = await axios.post(`http://localhost:3000/addServices/add`, service, { headers: headers })
+            const { data } = await axios.post(`http://localhost:3000/addServices/add`, service, { headers: headers });
             if (data.message) {
-                getService()
-                return Swal.fire({
+                getService();
+                Swal.fire({
                     icon: 'success',
                     title: "Lets give Em The Best",
                     text: 'Service Added succesfully!',
                     timer: 4000,
                     showDenyButton: false
-                })
+                });
             }
-
         } catch (err) {
             Swal.fire({
                 title: 'Oops...',
                 text: err.response.data.message,
                 icon: 'error'
-            })
-            console.log(err)
+            });
+            console.log(err);
         }
-    }
-
-    //---------------------DobleFucion------------------------------
+    };
 
     const addThem = async () => {
         handleClose();
         addService();
-    }
-
-    useEffect(()=>{
         getService();
-    },[]);
+    };
 
+    const generateInvoice = () => {
+        const doc = new jsPDF();
+        doc.setFontSize(12);
+        doc.text(`Invoice for Service: ${service.name}`, 20, 20);
+        doc.text(`Price: $${service.price}`, 20, 30);
+        doc.text(`Date: ${new Date().toLocaleDateString()}`, 20, 40);
+        doc.save('invoice.pdf');
+    };
 
-
-    //---------------------------------------------------------------
+    useEffect(() => {
+        getService();
+    }, []);
 
     return (
         <div>
@@ -114,15 +113,15 @@ export const AddServicesPage = () => {
                 </svg>
                 | ADD SERVICE PAGE
                 <div className="left binding color">
-                    <br></br>
+                    <br />
                     <h3>See the services!</h3>
                 </div>
             </div>
-
-            <button className="btn btn-warning" onClick={handleOpen}>ADD SERVICES</button>
-
-            <br></br>
-            <AddServicesTable service={service} getService={getService}/>
+            {dataUser.role === "ADMIN" && (
+                <button className="btn btn-warning" onClick={handleOpen}>ADD SERVICES</button>
+            )}
+            <br />
+            <AddServicesTable service={service} getService={getService} />
 
             <Modal
                 open={open}
@@ -137,46 +136,41 @@ export const AddServicesPage = () => {
                     <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                         <h4>Please fill all fields To Add a Service</h4>
                         <form>
-                            {/* Labels */}
                             <div className="mb-3">
-                                <label htmlFor="inputName" className="form-label">Name </label>
+                                <label htmlFor="inputName" className="form-label">Name</label>
                                 <input type="text" className="form-control" id="inputName" required />
                             </div>
-
-
                             <div className="mb-3">
-                                <label htmlFor="inputDescription" className="form-label">Description </label>
+                                <label htmlFor="inputDescription" className="form-label">Description</label>
                                 <input type="text" className="form-control" id="inputDescription" required />
                             </div>
-
-
                             <div className="mb-3">
-                                <label htmlFor="inputPrice" className="form-label">Price </label>
+                                <label htmlFor="inputPrice" className="form-label">Price</label>
                                 <input type="text" className="form-control" id="inputPrice" required />
                             </div>
-
                             <div className="mb-3">
-                                <label htmlFor="inputHistorial" className="form-label">Historial </label>
+                                <label htmlFor="inputHistorial" className="form-label">Historial</label>
                                 <input type="text" className="form-control" id="inputHistorial" required />
                             </div>
-
-                            <div className="mb-3">
-                                <label htmlFor="inputDPI" className="form-label">DPI </label>
-                                <input type="text" className="form-control" id="inputDPI" required />
-                            </div>
-                            {/* Labels */}
                         </form>
-
-                        <span><button className="btn btn-success" onClick={() => addThem()}>Add New Service</button></span>
-                        <span>      </span>
-                        <span><button className="btn btn-danger" onClick={handleClose}>Cancel</button></span>
-
+                        <span>
+                            <button className="btn btn-success" onClick={() => addThem()}>Add New Service</button>
+                        </span>
+                        <span> </span>
+                        <span>
+                            <button className="btn btn-danger" onClick={handleClose}>Cancel</button>
+                        </span>
                     </Typography>
                 </Box>
             </Modal>
 
+            {service && service.name && (
+                <div>
+                    <h3>Invoice for Service: {service.name}</h3>
+                    <p>Price: ${service.price}</p>
+                    <button className="btn btn-primary" onClick={generateInvoice}>Download Invoice</button>
+                </div>
+            )}
         </div>
-
-    )
-
-}
+    );
+};

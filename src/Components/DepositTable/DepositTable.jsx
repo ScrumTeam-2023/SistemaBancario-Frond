@@ -37,51 +37,58 @@ export const DepositTable = ({ getAllDeposits }) => {
   }, [getAllDeposits]);
 
     //CANCEL
-  const cancelDeposit = async (depositId) => {
-    try {
-      const response = await axios.delete(`http://localhost:3000/deposit/cancel/${depositId}`);
-      const { message } = response.data;
-
-      if (message === 'El tiempo de cancelacion ha expirado') {
-        Swal.fire({
-          icon: 'warning',
-          title: 'No se puede cancelar',
-          text: 'El tiempo para cancelar este depósito ha expirado.',
-          timer: 4000
-        });
-      } else if (message === 'El depósito se ha cancelado correctamente') {
-        Swal.fire({
-          icon: 'success',
-          title: 'Depósito cancelado',
-          text: 'El depósito se ha cancelado correctamente.',
-          timer: 4000
-        });
-      } else if (message === 'El depósito ya ha sido cancelado previamente') {
-        Swal.fire({
-          icon: 'warning',
-          title: 'No se puede cancelar',
-          text: 'Este depósito ya ha sido cancelado previamente.',
-          timer: 4000
-        });
-        
+    const cancelDeposit = async (depositId) => {
+      try {
+        const response = await axios.delete(`http://localhost:3000/deposit/cancel/${depositId}`);
+        const { message } = response.data;
+    
+        if (message === 'El tiempo de cancelacion ha expirado') {
+          Swal.fire({
+            icon: 'warning',
+            title: 'No se puede cancelar',
+            text: 'El tiempo para cancelar este depósito ha expirado.',
+            timer: 4000
+          });
+        } else if (message === 'El depósito se ha cancelado correctamente') {
+          Swal.fire({
+            icon: 'success',
+            title: 'Depósito cancelado',
+            text: 'El depósito se ha cancelado correctamente.',
+            timer: 4000
+          });
+        } else if (message === 'El depósito ya ha sido cancelado previamente') {
+          Swal.fire({
+            icon: 'warning',
+            title: 'No se puede cancelar',
+            text: 'Este depósito ya ha sido cancelado previamente.',
+            timer: 4000
+          });
+        } else {
+          Swal.fire({
+            icon: 'warning',
+            title: 'No se puede cancelar',
+            text: 'El depósito no se puede cancelar en este momento.',
+            timer: 4000
+          });
+        }
+      } catch (error) {
+        console.error(error);
+        if (error.response && error.response.data && error.response.data.message) {
+          Swal.fire({
+            title: 'Error',
+            text: error.response.data.message,
+            icon: 'error'
+          });
+        } else {
+          Swal.fire({
+            title: 'Error',
+            text: 'Error al cancelar el depósito',
+            icon: 'error'
+          });
+        }
       }
-    } catch (error) {
-      console.error(error);
-      if (error.response && error.response.data && error.response.data.message) {
-        Swal.fire({
-          title: 'Error',
-          text: error.response.data.message,
-          icon: 'error'
-        });
-      } else {
-        Swal.fire({
-          title: 'Error',
-          text: 'Error al cancelar el depósito',
-          icon: 'error'
-        });
-      }
-    }
-  };
+    };
+    
 
 
   const updateDeposit = (depositId, newAmount) => {
@@ -99,6 +106,8 @@ export const DepositTable = ({ getAllDeposits }) => {
         Swal.fire('Éxito', data.message, 'success');
       } else if (data.message === 'El tiempo de actualización ha expirado') {
         Swal.fire('Error', data.message, 'error');
+      } else if (data.message === 'No se puede actualizar un depósito cancelado') {
+        Swal.fire('Error', data.message, 'error');
       } else {
         Swal.fire('Error', 'Ocurrió un error al actualizar el depósito', 'error');
       }
@@ -112,6 +121,7 @@ export const DepositTable = ({ getAllDeposits }) => {
       Swal.fire('Error', 'Ocurrió un error al actualizar el depósito', 'error');
     }
   };
+  
 
   return (
     <>
@@ -180,5 +190,3 @@ export const DepositTable = ({ getAllDeposits }) => {
     </>
   );
 };
-
-

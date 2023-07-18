@@ -18,8 +18,8 @@ import { ProductPage } from './Pages/ProductPage';
 import { ProductUpdate } from './Pages/ProductUpdate';
 import { CompraPage } from './Pages/CompraPage';
 import { CompraTable } from './Components/CompraTable/CompraTAble';
-
-
+import { FavoritesPage} from './Pages/FavoritePage/FavoritePage'
+import { GraficasPage } from './Pages/Graficas/GraficasPage';
 // Aca van las Paginas
 
 export const AuthContext = createContext();
@@ -107,6 +107,14 @@ export const Index = () => {
                             {
                                 path: 'compra',
                                 element: <CompraTable/>
+                            },
+                            {
+                                path: 'favorite',
+                                element: <FavoritesPage/>
+                            },
+                            {
+                                path: 'graficas',
+                                element: <GraficasPage/>
                             }
                            ]
                     }
